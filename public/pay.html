@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <title> LOGIN </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="signin.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <style>
+      @media (min-width:768px) {
+        .card-deck > .card
+        {
+             width: 29%;
+            flex-wrap: wrap;
+            flex: initial; 
+        }
+  }
+    </style>
+  
+  </head>
+
+
+
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Blockchain Data Feeder App</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="createAsset.html">Create an asset</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="myAssets.html">My Assets</a>
+          </li>
+          
+        </ul>
+       
+      </div>
+    </nav>
+  <div class='container'>
+      <div class='row'>
+          <div class='col'>
+              <div class="form-signin">
+              <center><h5 class='font-weight-normal'>Send Tokens</h5></center>
+              <br>
+              <!-- <form method='POST' action='/login'> -->
+              <input type="text" class="form-control" id="recieverUserName" placeholder="Enter receiver username" name="recieverUserName" required>
+            
+              <input type="text" class="form-control" id="amountToSend" placeholder="Enter amount to send" name="amountToSend" required>
+  
+              </div>    
+              <center>
+                <button type="submit" value="submit" class="btn btn-dark" onclick='payToken()'>Send</button>
+              </center>
+              <!-- </form> -->
+          </div>    
+      </div>
+  </div>
+    
+    <script>
+      function  payToken(){
+  // alert(txnId)
+  var receiver = document.getElementById('recieverUserName').value
+  var amountToSend= document.getElementById("amountToSend").value
+  $.ajax({
+    type: 'POST',
+    url: '/payToken',
+    data: {
+      recieverUserName:receiver,
+      amountToSend:amountToSend
+    },
+    success: function(res){
+      alert(res);
+      window.location.href='createAsset.html';
+    }
+  });
+}   
+
+    </script>
+ 
+  </body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title> LOGIN </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="signin.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <style>
+		@media (min-width:768px) {
+    	.card-deck > .card
+    	{
+       		width: 29%;
+        	flex-wrap: wrap;
+        	flex: initial; 
+    	}
+}
+  </style>
+
+</head>
+
+<body onload="get_assets()">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Blockchain Data Feeder App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="createAsset.html">Create an asset</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="pay.html">Send Tokens</a>
+        </li>
+        
+      </ul>
+     
+    </div>
+  </nav>
+<div class='container'>
+   
+</div>
+</body> 
+
+<script>
+
+function get_assets()
+{
+  // let mail = document.getElementById('mail').value;
+  // let password = document.getElementById('password').value;
+
+  $.ajax({
+    type: 'GET',
+    url: '/get_assets',
+    success: function(res){
+    $('.container').html(res)
+    }
+  });
+
+}
+function  sellAsset(txCreatedID){
+  // alert(txnId)
+  var buyerUserName = window. prompt("Enter buyer Username: ")
+
+  $.ajax({
+    type: 'POST',
+    url: '/transferAsset',
+    data: {
+      txCreatedID:txCreatedID,
+      buyerUserName:buyerUserName
+    },
+    success: function(res){
+      alert(res);
+      window.location.href='createAsset.html';
+    }
+  });
+}
+
+</script>
+
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Football Data Feeder </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="signin.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/json2csv"></script>
+  <style>
+		@media (min-width:768px) {
+    	.card-deck > .card
+    	{
+       		width: 29%;
+        	flex-wrap: wrap;
+        	flex: initial; 
+    	}
+}
+  </style>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Blockchain Data Feeder App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="myAssets.html">My Assets</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="pay.html">Send Tokens</a>
+        </li>
+        
+      </ul>
+     
+    </div>
+  </nav>
+<div class='container'>
+    <div class='row'>
+        <div class='col'>
+            <div class="form-signin">
+            <center><h5 class='font-weight-normal'>Enter Data Here</h5></center>
+
+            <br>
+            <input type="text" class="form-control" id="teamName" placeholder="Team Name" name="phno" required>
+
+            <input type="email" class="form-control" id="nop" placeholder="Number of passes" name="passes" required>
+
+            <input type="text" class="form-control" id="nos" placeholder="Number of shots" required>
+
+            <input type="text" class="form-control" id="not" placeholder="Number of tackles" name="phno" required>
+            
+            <input type="text" class="form-control" id="nopc" placeholder="Number of passes completed" name="phno" required>
+
+            <input type="text" class="form-control" id="nosot" placeholder="Number of shots on target" name="phno" required>
+
+            <input type="text" class="form-control" id="nost" placeholder="Number of successful tackles" name="phno" required>
+
+            <input type="text" class="form-control" id="nog" placeholder="Number of goals" name="phno" required>
+
+            <input type="text" class="form-control" id="nosa" placeholder="Number of saves" name="phno" required>
+
+            <input type="text" class="form-control" id="price" placeholder="Price of DataSet" name="phno" required>
+
+          <input type="checkbox" id="saveAs" name="saveAs">
+          <label for="saveAs">Conver to csv</label>
+            </div>    
+            <center>
+              <button type="submit" value="submit" class="btn btn-dark" onclick='createAsset()'>Submit</button>
+              
+            </center>
+        </div>    
+    </div>
+</div>
+</body> 
+
+<script>
+
+
+
+
+
+function createAsset()
+{
+  let nop = document.getElementById('nop').value;
+  let nos = document.getElementById('nos').value;
+  let not = document.getElementById('not').value;
+  let nopc = document.getElementById('nopc').value;
+  let nosot = document.getElementById('nosot').value;
+  let nost = document.getElementById('nost').value;
+  let nog = document.getElementById('nog').value;
+  let nosa = document.getElementById('nosa').value;
+  let price = document.getElementById('price').value;
+  let teamName = document.getElementById('teamName').value;
+  let passingAccuracy = (nopc/nop)*100;
+  let shotAccuracy = (nosot/nos)*100;
+  let tackleAccuracy = (nost/not)*100
+
+
+  var data={teamName:teamName,
+           numberOfPasses:nop,
+           numberOfShots:nos,
+           numberOfTackles:not,
+           numberOfPassesCompleted:nopc,
+           numberOfShotsOnTarget:nosot,
+           numberOfSuccessfulTackles:nost,
+           numberOfGoals:nog,
+           numberOfSaves:nosa,
+           price:price,
+           passingAccuracy:passingAccuracy,
+           shotAccuracy:shotAccuracy,
+           tackleAccuracy:tackleAccuracy,
+           txnId:'',
+           convertToCSV:false
+           }
+
+
+  if(document.getElementById('saveAs').checked==true){
+    data={teamName:teamName,
+           numberOfPasses:nop,
+           numberOfShots:nos,
+           numberOfTackles:not,
+           numberOfPassesCompleted:nopc,
+           numberOfShotsOnTarget:nosot,
+           numberOfSuccessfulTackles:nost,
+           numberOfGoals:nog,
+           numberOfSaves:nosa,
+           price:price,
+           passingAccuracy:passingAccuracy,
+           shotAccuracy:shotAccuracy,
+           tackleAccuracy:tackleAccuracy,
+           txnId:'',
+           convertToCSV:true
+           }
+}
+
+
+  $.ajax({
+    type: 'POST',
+    url: '/createAsset',
+    data: data,
+    success: function(res){
+      alert(res);
+    }
+  });
+
+}
+
+</script>
+
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title> Football Data Feeder </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="signin.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <style>
+		@media (min-width:768px) {
+    	.card-deck > .card
+    	{
+       		width: 29%;
+        	flex-wrap: wrap;
+        	flex: initial; 
+    	}
+}
+  </style>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Blockchain Data Feeder App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="login.html">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="register.html">Sign Up</a>
+        </li>
+        
+      </ul>
+     
+    </div>
+  </nav>
+<div class='container'>
+    <div class='row'>
+        <div class='col'>
+            <div class="form-signin">
+            <center><h5 class='font-weight-normal'>Sign up here</h5></center>
+            <br>
+            <!-- <form method='POST' action='/login'> -->
+            <input type="email" class="form-control" id="userName" placeholder="Enter Username" name="mail" required>
+          
+            <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
+            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" name="password" required>
+
+            </div>    
+            <center>
+              <button type="submit" id="submit" value="submit" class="btn btn-dark" onclick='login()'>Login</button>
+            </center>
+            <!-- </form> -->
+        </div>    
+    </div>
+</div>
+</body> 
+
+<script>
+
+
+
+function login()
+{
+
+  if($('#password').val()==""||$('#confirmPassword').val()==""||$('#userName').val()==""){
+alert('Please fill all fields');
+return;
+}
+
+  if($('#password').val()!=$('#confirmPassword').val()){
+alert('Passwords do not match');
+return;
+}
+
+
+  let userName = document.getElementById('userName').value;
+  let password = document.getElementById('password').value;
+
+  $.ajax({
+    type: 'POST',
+    url: '/register',
+    data: {userName:userName,password:password,assetsOwned:[],keys:'',myWallet:''},
+    success: function(res){
+     
+        alert(res); 
+        if(res=='User Created'){
+          window.location.href="login.html"
+        }
+     
+    }
+  });
+
+}
+
+</script>
+
+</html>
